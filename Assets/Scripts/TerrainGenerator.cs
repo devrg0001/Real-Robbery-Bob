@@ -25,6 +25,7 @@ Texture2D GenerateTexture () {
             // float sample = Mathf.PerlinNoise(xCoord, yCoord);
             Color color = CalculateColor(x,y);
             texture.SetPixel(x, y, color);
+            
         }
     }
 
