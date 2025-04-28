@@ -402,11 +402,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapWidth: 102
   mapHeight: 71
-  noiseScale: 52.29
-  octaves: 28
-  persistance: 0.061
-  lacunarity: 6.23
-  seed: -34
+  noiseScale: 15.6
+  octaves: 43
+  persistance: 0.062
+  lacunarity: 6.16
+  seed: -42
   offset: {x: 0, y: 0}
   autoUpdate: 1
 --- !u!1 &1087188464
@@ -593,6 +593,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 388759079}
   - {fileID: 1087188467}
-  - {fileID: 103533839}
   - {fileID: 753983531}
   - {fileID: 478138627}
+  - {fileID: 2029552076}
