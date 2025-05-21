@@ -1,5 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
+using Unity.Mathematics;
 
 public static class Noise {
 
@@ -37,7 +38,7 @@ public static class Noise {
 					float sampleY = (y-halfHeight) / scale * frequency + octaveOffsets[i].y;
 
 					float perlinValue = Mathf.PerlinNoise (sampleX, sampleY) * 2 - 1;
-					noiseHeight += perlinValue * amplitude;
+					noiseHeight += perlinValue * amplitude; // * ((halfWidth - math.abs(x-halfWidth)) / halfWidth) * ((halfWidth - math.abs(y-halfHeight)) / halfHeight);
 
 					amplitude *= persistance;
 					frequency *= lacunarity;
