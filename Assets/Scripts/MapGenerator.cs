@@ -52,6 +52,32 @@ public class MapGenerator : MonoBehaviour {
 		}
 	}
 
+	public void GenerateMap(float offsetX, float offsetY, float noiseS) {
+		float[,] noiseMap = Noise.GenerateNoiseMap (mapChunkSize, mapChunkSize, seed, noiseS, octaves, persistance, lacunarity, offset + new Vector2(offsetX, offsetY));
+
+		Color[] colourMap = new Color[mapChunkSize * mapChunkSize];
+		for (int y = 0; y < mapChunkSize; y++) {
+			for (int x = 0; x < mapChunkSize; x++) {
+				float currentHeight = noiseMap [x, y];
+				for (int i = 0; i < regions.Length; i++) {
+					if (currentHeight <= regions [i].height) {
+						colourMap [y * mapChunkSize + x] = regions [i].colour;
+						break;
+					}
+				}
+			}
+		}
+
+		MapDisplay display = FindFirstObjectByType<MapDisplay> ();
+		if (drawMode == DrawMode.NoiseMap) {
+			display.DrawTexture (TextureGenerator.TextureFromHeightMap (noiseMap));
+		} else if (drawMode == DrawMode.ColourMap) {
+			display.DrawTexture (TextureGenerator.TextureFromColourMap (colourMap, mapChunkSize, mapChunkSize));
+		} else if (drawMode == DrawMode.Mesh) {
+			display.DrawMesh (MeshGenerator.GenerateTerrainMesh (noiseMap, meshHeightMultiplier, meshHeightCurve, levelOfDetail), TextureGenerator.TextureFromColourMap (colourMap, mapChunkSize, mapChunkSize));
+		}
+	}
+
 	void OnValidate() {
 		if (lacunarity < 1) {
 			lacunarity = 1;

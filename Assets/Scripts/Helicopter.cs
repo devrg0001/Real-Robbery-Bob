@@ -48,14 +48,7 @@ public class Helicopter : MonoBehaviour
             yAngle = offsetSpeed * Time.deltaTime;
 
         }
-        if (Input.GetKey(KeyCode.Q))
-        {
-            transform.position += Vector3.up * translateSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-            transform.position += Vector3.down * translateSpeed * Time.deltaTime;
-        }
+        
         move();
         xAngle = 0;
         yAngle = 0;

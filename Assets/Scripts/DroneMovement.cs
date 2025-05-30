@@ -44,16 +44,7 @@ public class DroneMovement : MonoBehaviour
             gameManager.yOffset -= offsetSpeed * Time.deltaTime;
  
         }
-        if (Input.GetKey(KeyCode.Q))
-        {
-           
-            character.transform.position += Vector3.up * translateSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-         
-            character.transform.position += Vector3.down * translateSpeed * Time.deltaTime;
-        }
+       
         
 
     }
