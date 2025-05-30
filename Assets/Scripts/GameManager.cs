@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject chopper;
 
-    private static int current = 0;
+    private static int current = 1;
 
 
     MapGenerator mapGen;
@@ -31,29 +31,15 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         explorers[current].SetActive(true);
-        explorers[current+1].SetActive(false);
-        
         mapGen = FindAnyObjectByType<MapGenerator>();
         mapGen.GenerateMap(0,0);
+        camera.transform.SetParent(explorers[current].transform);
+        camera.transform.localPosition = cameraOffsets[current];
     }
     // Update is called once per frame
     void Update()
     {
         mapGen.GenerateMap(xOffset, yOffset, 1+heightOffset);
-
-        current = 1;
-            
-            if (current >= explorers.Length)
-            {
-                current = 0;
-            }
-            explorers[current].SetActive(true);
-
-            camera.transform.SetParent(explorers[current].transform);
-            camera.transform.localPosition = cameraOffsets[current];
-
-        
-
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
