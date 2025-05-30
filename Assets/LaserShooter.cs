@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LaserShooter : MonoBehaviour
@@ -17,11 +18,18 @@ public class LaserShooter : MonoBehaviour
     [SerializeField] private float startingDist = 400f;            // Start distance
 
     [SerializeField] private float offset = 2.82f;
+    
+    [SerializeField] private int score = 0;
+
+    [SerializeField] private TextMeshProUGUI gameOverText; // Text to display game over message
+
+    [SerializeField] private TextMeshProUGUI scoreText; // Text to display game over message
 
     private List<GameObject> drones = new List<GameObject>();
 
     void Start()
     {
+        scoreText.text = "Score: " + score.ToString();
         SpawnDrones();
     }
 
@@ -44,6 +52,9 @@ public class LaserShooter : MonoBehaviour
 
             if (hit.collider.CompareTag("Drone"))
             {
+                score++;
+                scoreText.text = "Score: " + score.ToString();
+
                 Destroy(hit.collider.gameObject);
 
                 float XDistance = UnityEngine.Random.Range(-startingDist, startingDist);
@@ -62,6 +73,8 @@ public class LaserShooter : MonoBehaviour
     {
         for (int i = 0; i < droneCount; i++)
         {
+            
+
             float XDistance = UnityEngine.Random.Range(-startingDist, startingDist);
             Vector3 randomPosition = new Vector3(XDistance, 0, (float) Math.Sqrt(startingDist * startingDist - XDistance * XDistance));
             GameObject drone = Instantiate(dronePrefab, target.transform.position + randomPosition, Quaternion.identity);
@@ -80,11 +93,14 @@ public class LaserShooter : MonoBehaviour
                 drone.transform.position = new Vector3(drone.transform.position.x,target.transform.position.y-offset,drone.transform.position.z);
 
                 float distance = Vector3.Distance(drone.transform.position, target.position);
-                if (distance < 0.5f)  // Adjust threshold for contact
+                if (distance < 5f)  // Adjust threshold for contact
                 {
                     Debug.Log("Game Over");
-                    // Optionally: disable the drone to stop further movement
-                    //drone.SetActive(false);
+                    gameOverText.text = "Game Over"; // Display game over message
+                    foreach (GameObject droned in drones)
+                    {
+                        droned.SetActive(false); // Disable all drones
+                    }
                 }
             }
         }
