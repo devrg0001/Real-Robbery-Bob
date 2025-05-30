@@ -93,7 +93,7 @@ public class LaserShooter : MonoBehaviour
                 drone.transform.position = new Vector3(drone.transform.position.x,target.transform.position.y-offset,drone.transform.position.z);
 
                 float distance = Vector3.Distance(drone.transform.position, target.position);
-                if (distance < 5f)  // Adjust threshold for contact
+                if (distance < 3f)  // Adjust threshold for contact
                 {
                     Debug.Log("Game Over");
                     gameOverText.text = "Game Over"; // Display game over message
