@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
     public float xOffset = 0;
     public float yOffset = 0;
 
+    public float heightOffset = 40f;
+
     public float noiseScale = 40;
 
     void Start()
@@ -36,7 +39,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mapGen.GenerateMap(xOffset, yOffset);
+        mapGen.GenerateMap(xOffset, yOffset, 1+heightOffset);
+        
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             explorers[current].SetActive(false);
@@ -49,33 +53,45 @@ public class GameManager : MonoBehaviour
 
             camera.transform.SetParent(explorers[current].transform);
             camera.transform.localPosition = cameraOffsets[current];
-         
+
         }
 
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
             camera.transform.Rotate(rotateSpeed * Time.deltaTime, 0, 0, Space.Self);
-            
+
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
             camera.transform.Rotate(-rotateSpeed * Time.deltaTime, 0, 0, Space.Self);
-            
+
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             camera.transform.parent.Rotate(0, rotateSpeed * 2 * Time.deltaTime, 0, Space.Self);
-            
+
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
             camera.transform.parent.Rotate(0, -rotateSpeed * 2 * Time.deltaTime, 0, Space.Self);
-            
+
+        }
+        if (Input.GetKey(KeyCode.Q))
+        {
+            heightOffset += translateSpeed * Time.deltaTime;
+
+            //explorers[current].transform.position += Vector3.up * translateSpeed * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            heightOffset -= translateSpeed * Time.deltaTime;
+ 
+            //explorers[current].transform.position += Vector3.down * translateSpeed * Time.deltaTime;
         }
 
 
         //camera.transform.position = explorers[current].transform.position;
-        
+
     }
 }
