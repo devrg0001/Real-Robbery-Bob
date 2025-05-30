@@ -40,11 +40,9 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         mapGen.GenerateMap(xOffset, yOffset, 1+heightOffset);
-        
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            explorers[current].SetActive(false);
-            current++;
+
+        current = 1;
+            
             if (current >= explorers.Length)
             {
                 current = 0;
@@ -54,7 +52,7 @@ public class GameManager : MonoBehaviour
             camera.transform.SetParent(explorers[current].transform);
             camera.transform.localPosition = cameraOffsets[current];
 
-        }
+        
 
 
         if (Input.GetKey(KeyCode.DownArrow))
